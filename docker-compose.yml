@@ -3,21 +3,26 @@ services:
     build:
       context: ./book-my-flix-be
       dockerfile: Dockerfile
+    container_name: backend
     ports:
       - "3333:3333"
     env_file:
       - .env
+    volumes:
+      - ./book-my-flix-be/src:/app/src
+    command: sh -c "npx prisma migrate deploy && npm run start:dev"
     depends_on:
       - db
 
   db:
     image: postgres:latest
+    container_name: postgres
     ports:
       - "5432:5432"
     env_file:
       - .env
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/18/data
 
 volumes:
   pgdata:

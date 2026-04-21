@@ -2,3 +2,7 @@
 .DS_Store
 node_modules
 dist
+npm-debug.log*
+
+# Prisma generated client
+book-my-flix-be/src/generated/prisma

@@ -10,7 +10,7 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
     const adapter = new PrismaPg({
       connectionString: process.env.DATABASE_URL,
     });
-    
+
     this.client = new PrismaClient({ adapter });
   }
 
@@ -24,5 +24,9 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
 
   get user() {
     return this.client.user;
+  }
+
+  get movie() {
+    return this.client.movie;
   }
 }

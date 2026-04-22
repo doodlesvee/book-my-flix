@@ -25,27 +25,27 @@ enum Genre {
   COMEDY
 }
 
-model User{
-  id Int @id @default(autoincrement())
-  email     String   @unique                    
-  name      String                                  
-  password  String                                  
-  role      Role   @default(REGULAR)       
-  createdAt DateTime @default(now())               
-  updatedAt DateTime @updatedAt         
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  password  String
+  role      Role     @default(REGULAR)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@map("users")  
+  @@map("users")
 }
 
-model Movie{
-  id Int @id @default(autoincrement())
-  title String
+model Movie {
+  id          Int       @id @default(autoincrement())
+  title       String
   description String
-  posterUrl   String?      // ? makes it optional
-  releaseDate DateTime?    // add this line
-  genre Genre
-  createdAt DateTime @default(now())               
-  updatedAt DateTime @updatedAt
+  posterUrl   String?
+  releaseDate DateTime?
+  genre       Genre
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@map("movies")
 }

@@ -31,6 +31,16 @@ enum SeatCategory {
   RECLINER
 }
 
+enum TimeSlot {
+  MORNING
+  EVENING
+}
+
+enum DayType{
+  WEEKDAY
+  WEEKEND
+}
+
 
 model User {
   id        Int      @id @default(autoincrement())
@@ -52,6 +62,8 @@ model Movie {
   releaseDate DateTime?
   genre       Genre
   runTime     Int
+
+  shows Shows[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
  
@@ -65,9 +77,11 @@ model Theater {
   city      String
   state     String
   address   String
+  screens   Screen[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  pricing Pricing[]
   @@map("theaters")
 }
 
@@ -77,6 +91,8 @@ model Screen {
   rows         Int
   seatsPerRow  Int
   theaterId    Int
+  seats        Seat[]
+  shows        Shows[]
   theater      Theater  @relation(fields: [theaterId], references: [id])
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -95,4 +111,38 @@ model Seat {
 
   @@unique([screenId, row, seatNumber])  // no duplicate seats
   @@map("seats")
+}
+
+model Pricing {
+  id Int @id @default(autoincrement())
+  price Decimal
+  category SeatCategory
+  slot TimeSlot
+  dayType DayType
+  theaterId Int
+  theater      Theater  @relation(fields: [theaterId], references: [id])
+
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+
+  @@unique([theaterId, category, slot, dayType])
+  @@map("pricing")
+}
+
+model Shows {
+    id Int @id @default(autoincrement())
+    movieId Int
+    screenId Int
+    showTime DateTime 
+
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+
+    movie Movie @relation(fields : [movieId], references: [id])
+    screen Screen @relation(fields : [screenId], references: [id])
+
+    @@map("shows")
 }

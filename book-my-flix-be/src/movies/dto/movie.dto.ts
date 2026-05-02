@@ -6,6 +6,7 @@ export class CreateMovieDto {
   posterUrl?: string;
   releaseDate?: string;
   genre!: Genre;
+  runTime!: number;
 }
 
 export class UpdateMovieDto {
@@ -14,4 +15,5 @@ export class UpdateMovieDto {
   posterUrl?: string;
   releaseDate?: string;
   genre?: Genre;
+  runTime?: number;
 }

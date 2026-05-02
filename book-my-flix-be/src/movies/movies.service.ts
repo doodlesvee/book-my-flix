@@ -15,6 +15,7 @@ export class MoviesService {
         posterUrl: dto.posterUrl,
         releaseDate: dto.releaseDate ? new Date(dto.releaseDate) : null,
         genre: dto.genre,
+        runTime: dto.runTime,
       },
     });
   }

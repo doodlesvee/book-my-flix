@@ -29,4 +29,36 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
   get movie() {
     return this.client.movie;
   }
+
+  get theater() {
+    return this.client.theater;
+  }
+
+  get screen() {
+    return this.client.screen;
+  }
+
+  get pricing() {
+    return this.client.pricing;
+  }
+
+  get seat() {
+    return this.client.seat;
+  }
+
+  get shows() {
+    return this.client.shows;
+  }
+
+  get booking() {
+    return this.client.booking;
+  }
+
+  get bookedSeat() {
+    return this.client.bookedSeat;
+  }
+
+  get $transaction() {
+    return this.client.$transaction.bind(this.client);
+  }
 }

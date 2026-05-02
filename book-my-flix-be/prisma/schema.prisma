@@ -41,6 +41,12 @@ enum DayType{
   WEEKEND
 }
 
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
 
 model User {
   id        Int      @id @default(autoincrement())
@@ -50,6 +56,8 @@ model User {
   role      Role     @default(REGULAR)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  bookings  Booking[]
 
   @@map("users")
 }
@@ -63,7 +71,7 @@ model Movie {
   genre       Genre
   runTime     Int
 
-  shows Shows[]
+  shows       Shows[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
  
@@ -93,7 +101,7 @@ model Screen {
   theaterId    Int
   seats        Seat[]
   shows        Shows[]
-  theater      Theater  @relation(fields: [theaterId], references: [id])
+  theater      Theater  @relation(fields: [theaterId], references: [id], onDelete: Cascade)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -107,7 +115,9 @@ model Seat {
   seatNumber Int          // 1, 2, 3...
   category   SeatCategory
   screenId   Int
-  screen     Screen       @relation(fields: [screenId], references: [id])
+  screen     Screen       @relation(fields: [screenId], references: [id], onDelete: Cascade)
+
+  bookedSeats BookedSeat[]
 
   @@unique([screenId, row, seatNumber])  // no duplicate seats
   @@map("seats")
@@ -120,7 +130,7 @@ model Pricing {
   slot TimeSlot
   dayType DayType
   theaterId Int
-  theater      Theater  @relation(fields: [theaterId], references: [id])
+  theater      Theater  @relation(fields: [theaterId], references: [id], onDelete: Cascade)
 
 
   createdAt    DateTime @default(now())
@@ -135,14 +145,50 @@ model Shows {
     id Int @id @default(autoincrement())
     movieId Int
     screenId Int
-    showTime DateTime 
+    showTime DateTime
+    slot     TimeSlot
 
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
 
 
-    movie Movie @relation(fields : [movieId], references: [id])
-    screen Screen @relation(fields : [screenId], references: [id])
+    movie Movie @relation(fields : [movieId], references: [id], onDelete: Cascade)
+    screen Screen @relation(fields : [screenId], references: [id], onDelete: Cascade)
 
+    bookings    Booking[]
+    bookedSeats BookedSeat[]
+
+    @@unique([screenId, showTime])
     @@map("shows")
+}
+
+model Booking {
+  id         Int           @id @default(autoincrement())
+  userId     Int
+  showId     Int
+  totalPrice Decimal
+  status     BookingStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  user       User          @relation(fields: [userId], references: [id])
+  show       Shows         @relation(fields: [showId], references: [id], onDelete: Cascade)
+  bookedSeats BookedSeat[]
+
+  @@map("bookings")
+}
+
+model BookedSeat {
+  id        Int     @id @default(autoincrement())
+  bookingId Int
+  seatId    Int
+  showId    Int
+  price     Decimal
+
+  booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  seat      Seat    @relation(fields: [seatId], references: [id])
+  show      Shows   @relation(fields: [showId], references: [id], onDelete: Cascade)
+
+  @@unique([seatId, showId])  // prevents double booking
+  @@map("booked_seats")
 }

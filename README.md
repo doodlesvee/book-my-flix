@@ -86,84 +86,9 @@ NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
 NEXT_PUBLIC_API_URL=http://localhost:3333
 ```
 
-## API Endpoints
+## API Documentation
 
-Base URL: `http://localhost:3333`
-
-### Auth
-
-| Method | Endpoint       | Auth | Description               |
-| ------ | -------------- | ---- | ------------------------- |
-| POST   | `/auth/signup` | —    | Register user             |
-| POST   | `/auth/login`  | —    | Login user                |
-| POST   | `/auth/google` | —    | Login/register via Google |
-
-All return `{ access_token }`.
-
-### Movies
-
-| Method | Endpoint      | Auth  | Description                            |
-| ------ | ------------- | ----- | -------------------------------------- |
-| GET    | `/movies`     | —     | List movies (filter: `title`, `genre`) |
-| GET    | `/movies/:id` | —     | Get movie by ID                        |
-| POST   | `/movies`     | Admin | Create movie                           |
-| PUT    | `/movies/:id` | Admin | Update movie                           |
-| DELETE | `/movies/:id` | Admin | Delete movie                           |
-
-### Theaters
-
-| Method | Endpoint        | Auth  | Description                    |
-| ------ | --------------- | ----- | ------------------------------ |
-| GET    | `/theaters`     | —     | List theaters (filter: `city`) |
-| GET    | `/theaters/:id` | —     | Get theater by ID              |
-| POST   | `/theaters`     | Admin | Create theater                 |
-| PATCH  | `/theaters/:id` | Admin | Update theater                 |
-| DELETE | `/theaters/:id` | Admin | Delete theater                 |
-
-### Screens
-
-| Method | Endpoint       | Auth  | Description                        |
-| ------ | -------------- | ----- | ---------------------------------- |
-| GET    | `/screens`     | —     | List screens (filter: `theaterId`) |
-| GET    | `/screens/:id` | —     | Get screen by ID                   |
-| POST   | `/screens`     | Admin | Create screen with seat layout     |
-| PATCH  | `/screens/:id` | Admin | Update screen                      |
-| DELETE | `/screens/:id` | Admin | Delete screen                      |
-
-### Seats
-
-| Method | Endpoint | Auth | Description                          |
-| ------ | -------- | ---- | ------------------------------------ |
-| GET    | `/seats` | —    | List seats for a screen (`screenId`) |
-
-### Shows
-
-| Method | Endpoint     | Auth  | Description                                |
-| ------ | ------------ | ----- | ------------------------------------------ |
-| GET    | `/shows`     | —     | List shows (filter: `screenId`, `movieId`) |
-| GET    | `/shows/:id` | —     | Get show with movie & screen details       |
-| POST   | `/shows`     | Admin | Create show (validates overlap)            |
-| DELETE | `/shows/:id` | Admin | Delete show                                |
-
-### Pricing
-
-| Method | Endpoint       | Auth  | Description                        |
-| ------ | -------------- | ----- | ---------------------------------- |
-| GET    | `/pricing`     | —     | List pricing (filter: `theaterId`) |
-| GET    | `/pricing/:id` | —     | Get pricing by ID                  |
-| POST   | `/pricing`     | Admin | Create pricing rule                |
-| PATCH  | `/pricing/:id` | Admin | Update pricing                     |
-| DELETE | `/pricing/:id` | Admin | Delete pricing                     |
-
-### Bookings
-
-| Method | Endpoint               | Auth | Description                   |
-| ------ | ---------------------- | ---- | ----------------------------- |
-| GET    | `/bookings`            | JWT  | Get user's bookings           |
-| POST   | `/bookings/lock`       | JWT  | Lock seats (10-min hold)      |
-| POST   | `/bookings/confirm`    | JWT  | Confirm booking after payment |
-| POST   | `/bookings/release`    | JWT  | Release locked seats          |
-| PATCH  | `/bookings/:id/cancel` | JWT  | Cancel a confirmed booking    |
+Swagger UI is available at: [http://localhost:3333/api](http://localhost:3333/api)
 
 ## Database Schema
 
